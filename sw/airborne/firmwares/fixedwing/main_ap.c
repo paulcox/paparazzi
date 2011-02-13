@@ -189,7 +189,7 @@ static inline void reporting_task( void ) {
     DOWNLINK_SEND_BOOT(DefaultChannel, &version);
     boot = FALSE;
   }
-  /** then report periodicly */
+  /** then report periodically */
   else {
     PeriodicSendAp(DefaultChannel);
   }
@@ -483,13 +483,14 @@ void periodic_task_ap( void ) {
 #ifdef USE_INFRARED
       infrared_update();
       estimator_update_state_infrared();
-#endif /* USE_INFRARED */
       if (infrared.bogus == 0){
+#endif /* USE_INFRARED */
 	      h_ctl_attitude_loop(); /* Set  h_ctl_aileron_setpoint & h_ctl_elevator_setpoint */
 	      v_ctl_throttle_slew();
 	      ap_state->commands[COMMAND_THROTTLE] = v_ctl_throttle_slewed;
 	      ap_state->commands[COMMAND_ROLL] = h_ctl_aileron_setpoint;
 	      ap_state->commands[COMMAND_PITCH] = h_ctl_elevator_setpoint;
+#ifdef USE_INFRARED
       } else {
       //disable auto control loops
 	     v_ctl_mode = V_CTL_MODE_MANUAL;
@@ -499,6 +500,7 @@ void periodic_task_ap( void ) {
 	     ap_state->commands[COMMAND_ROLL] = 0;
 	     ap_state->commands[COMMAND_PITCH] = 0;
       }
+#endif /* USE_INFRARED */
 
 #if defined MCU_SPI_LINK
       link_mcu_send();

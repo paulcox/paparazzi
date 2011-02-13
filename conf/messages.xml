@@ -41,6 +41,7 @@
      <field name="longitudinal" type="int16"/>
      <field name="lateral" type="int16"/>
      <field name="vertical" type="int16"/>
+     <field name="bogus" type="uint8" unit="bool"/>
    </message>
 
    <message name="GPS" id="8">
