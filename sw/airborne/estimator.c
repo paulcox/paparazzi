@@ -236,6 +236,22 @@ void estimator_update_state_gps( void ) {
 
 #include "subsystems/sensors/infrared.h"
 void estimator_update_state_infrared( void ) {
+ /*Check IR contrast. If too low declare IR readings as bogus.
+   This will disable control loops and will set servos/motor to constant values.
+   Assumes the vehicle is inherantly stable and will descend from cloud in relatively
+   flat attitude at which point normal control can resume. 
+   (Perhaps we can record the altitude at which IR contrast dropped and mark that as a
+   do not exceed ceiling)*/
+
+  /*hysteresis*/
+  if ((infrared.top < IR_CONTRAST_THRESHOLD_LOW) && (infrared.bogus == FALSE)) { 
+	infrared.bogus = TRUE;
+  } 
+  if ((infrared.top > IR_CONTRAST_THRESHOLD_HIGH) && (infrared.bogus == TRUE)) { 
+	infrared.bogus = FALSE;
+  } 
+	
+
   estimator_phi  = atan2(infrared.roll, infrared.top) - infrared.roll_neutral;
 
   estimator_theta  = atan2(infrared.pitch, infrared.top) - infrared.pitch_neutral;

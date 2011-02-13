@@ -93,6 +93,14 @@
 #define IR_CORRECTION_DOWN 1.
 #endif
 
+#ifndef IR_CONTRAST_THRESHOLD_LOW
+#define IR_CONTRAST_THRESHOLD_LOW 75
+#endif
+
+#ifndef IR_CONTRAST_THRESHOLD_HIGH
+#define IR_CONTRAST_THRESHOLD_HIGH 150
+#endif
+
 struct Infrared_raw {
   /* the 3 channels of the sensor
    */
@@ -129,6 +137,8 @@ struct Infrared {
   float correction_right;
   float correction_up;
   float correction_down;
+  
+  uint8_t bogus;
 };
 
 extern struct Infrared infrared;

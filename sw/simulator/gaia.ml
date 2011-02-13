@@ -91,6 +91,10 @@ let _ =
   let hbox = GPack.hbox ~packing:vbox#pack () in
   ignore (GMisc.label ~text:"Wind speed:" ~packing:hbox#pack ());
   ignore (GRange.scale `HORIZONTAL ~adjustment:wind_speed_adj ~packing:hbox#add ());
+  
+  let hbox = GPack.hbox ~packing:vbox#pack () in
+  ignore (GMisc.label ~text:"IR Contrast:" ~packing:hbox#pack ());
+  ignore (GRange.scale `HORIZONTAL ~adjustment:infrared_contrast_adj ~packing:hbox#add ());
 
   vbox#pack gps_sa#coerce;
 

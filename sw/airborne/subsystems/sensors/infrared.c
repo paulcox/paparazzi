@@ -49,6 +49,8 @@ void infrared_struct_init(void) {
   infrared.lateral_correction = IR_LATERAL_CORRECTION;
   infrared.longitudinal_correction = IR_LONGITUDINAL_CORRECTION;
   infrared.vertical_correction = IR_VERTICAL_CORRECTION;
+  
+  infrared.bogus = TRUE;
 
 }
 
