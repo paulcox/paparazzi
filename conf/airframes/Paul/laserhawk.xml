@@ -1,0 +1,160 @@
+<airframe name="LASERHAWK">
+
+  <commands>
+    <axis name="PITCH"  failsafe_value="0"/>
+    <axis name="ROLL"   failsafe_value="0"/>
+    <axis name="YAW"    failsafe_value="0"/>
+    <axis name="THRUST" failsafe_value="0"/>
+  </commands>
+
+  <section name="SUPERVISION" prefix="SUPERVISION_">
+    <define name="MIN_MOTOR" value="2"/>
+    <define name="MAX_MOTOR" value="210"/>
+    <define name="TRIM_A" value="0"/>
+    <define name="TRIM_E" value="0"/>
+    <define name="TRIM_R" value="0"/>
+  </section>
+
+  <servos>
+    <servo name="THROTTLE" no="0" min="1290" neutral="1290" max="1810"/>
+    <servo name="ELEVATOR" no="1" min="1770" neutral="1457" max="970"/>
+    <servo name="RUDDER" no="3" min="1040" neutral="1595" max="2040"/>
+    <servo name="AILERON_LEFT" no="4" min="1000" neutral="1508" max="2000"/>
+    <servo name="AILERON_RIGHT" no="5" min="1000" neutral="1527" max="2000"/>
+  </servos>
+
+
+
+ <!-- this is my crista -->
+  <section name="IMU" prefix="IMU_">
+
+    <define name="GYRO_P_SIGN" value="-1"/>
+    <define name="GYRO_Q_SIGN" value="1"/>
+    <define name="GYRO_R_SIGN" value="1"/>
+
+    <define name="GYRO_P_NEUTRAL" value="31288"/>
+    <define name="GYRO_Q_NEUTRAL" value="32593"/>
+    <define name="GYRO_R_NEUTRAL" value="32709"/>
+
+    <define name="GYRO_P_SENS" value=" 0.943560" integer="16"/>
+    <define name="GYRO_Q_SENS" value=" 0.926199" integer="16"/>
+    <define name="GYRO_R_SENS" value=" 0.931912" integer="16"/>
+
+
+    <define name="ACCEL_X_SIGN" value="1"/>
+    <define name="ACCEL_Y_SIGN" value="1"/>
+    <define name="ACCEL_Z_SIGN" value="1"/>
+
+    <define name="ACCEL_X_NEUTRAL" value="32857"/>
+    <define name="ACCEL_Y_NEUTRAL" value="32429"/>
+    <define name="ACCEL_Z_NEUTRAL" value="32593"/>
+
+    <define name="ACCEL_X_SENS" value="-2.58273701242" integer="16"/>
+    <define name="ACCEL_Y_SENS" value="-2.54076215332" integer="16"/>
+    <define name="ACCEL_Z_SENS" value="-2.57633620646" integer="16"/>
+
+
+    <define name="MAG_X_SIGN" value="-43"/>
+    <define name="MAG_Y_SIGN" value=" 49"/>
+    <define name="MAG_Z_SIGN" value="-66"/>
+
+    <define name="MAG_X_NEUTRAL" value="-43"/>
+    <define name="MAG_Y_NEUTRAL" value=" 49"/>
+    <define name="MAG_Z_NEUTRAL" value="-66"/>
+
+    <define name="MAG_X_SENS" value=" 5.32718104135" integer="16"/>
+    <define name="MAG_Y_SENS" value="-4.87857821202" integer="16"/>
+    <define name="MAG_Z_SENS" value="-3.11986612709" integer="16"/>
+
+
+    <define name="BODY_TO_IMU_PHI"   value="RadOfDeg(  0.)"/>
+    <define name="BODY_TO_IMU_THETA" value="RadOfDeg(  0.)"/>
+    <define name="BODY_TO_IMU_PSI"   value="RadOfDeg(  45.)"/>
+
+<!--  3  -->
+    <define name="GYRO_P_CHAN" value="0"/>
+    <define name="GYRO_Q_CHAN" value="4"/>
+    <define name="GYRO_R_CHAN" value="1"/>
+    <define name="ACCEL_X_CHAN" value="5"/>
+    <define name="ACCEL_Y_CHAN" value="2"/>
+    <define name="ACCEL_Z_CHAN" value="6"/>
+
+  </section>
+
+  <makefile>
+
+#
+# main_lh
+#
+
+USER =
+#HOST = beth
+#HOST = overo
+#HOST = auto7
+#HOST = 192.168.2.11
+#HOST = 192.168.2.2
+#HOST= regis
+HOST = auto3
+TARGET_DIR = ~
+SRC_FMS=fms
+SRC_LASERHAWK=firmwares/laserhawk
+
+main_lh.ARCHDIR = omap
+main_lh.CFLAGS = -I. -I$(SRC_FMS)
+#main_lh.srcs  = $(SRC_LASERHAWK)/main_overo.c
+main_lh.CFLAGS  += -DFMS_PERIODIC_FREQ=512
+main_lh.srcs    = $(SRC_FMS)/fms_periodic.c
+##main_lh.srcs    += $(SRC_FMS)/fms_serial_port.c
+#main_lh.LDFLAGS += -lrt
+main_lh.srcs += $(SRC_FMS)/fms_spi_link.c
+main_lh.CFLAGS += -DOVERO_LINK_MSG_UP=AutopilotMessageBethUp -DOVERO_LINK_MSG_DOWN=AutopilotMessageBethDown
+
+#PAPARAZZI_INC = -I$(PAPARAZZI_HOME)/var/$(AIRCRAFT) \
+#                -I$(PAPARAZZI_SRC)/sw/airborne      \
+#                -I$(PAPARAZZI_SRC)/sw/include
+
+#main_lh.CFLAGS  += -DDOWNLINK -DDOWNLINK_TRANSPORT=UdpTransport
+#main_lh.srcs    += $(SRC_FMS)/udp_transport2.c downlink.c
+#main_lh.srcs    += $(SRC_FMS)/fms_network.c
+#main_lh.LDFLAGS += -levent -lm
+
+LASERHAWK_DIR = /opt/paparazzi/omap/overo-oe/tmp/sysroots/armv7a-angstrom-linux-gnueabi/usr/include/eigen2
+LASERHAWK_CFLAGS =  -I$(LASERHAWK_DIR) -DEIGEN_DONT_VECTORIZE  -DEIGEN_DONT_ALIGN -DNDEBUG 
+
+main_lh.LDFLAGS += -lflexiport -lhokuyo_aist
+#main_lh.CXXFLAGS += $(LASERHAWK_CFLAGS)
+main_lh.cpp_srcs    = $(SRC_LASERHAWK)/main.cpp
+main_lh.cpp_srcs    += $(SRC_LASERHAWK)/chokuyoprocess.cpp
+main_lh.cpp_srcs    += $(SRC_LASERHAWK)/chokuyoplus.cpp
+main_lh.cpp_srcs    += $(SRC_LASERHAWK)/pnm_io2.cpp
+
+#
+# overo uart test
+#
+
+overo_test_uart.ARCHDIR = omap
+overo_test_uart.CFLAGS = -I. -I$(SRC_FMS) -I$(SRC_LASERHAWK)
+overo_test_uart.srcs  = $(SRC_LASERHAWK)/overo_test_uart.c
+
+overo_test_uart.CFLAGS  += -DFMS_PERIODIC_FREQ=500
+overo_test_uart.srcs    += $(SRC_FMS)/fms_periodic.c
+overo_test_uart.srcs    += $(SRC_FMS)/fms_serial_port.c
+overo_test_uart.LDFLAGS += -lrt
+overo_test_uart.CFLAGS  += -DDOWNLINK -DDOWNLINK_TRANSPORT=UdpTransport
+overo_test_uart.srcs    += $(SRC_FMS)/udp_transport2.c downlink.c
+overo_test_uart.srcs    += $(SRC_FMS)/fms_network.c
+overo_test_uart.LDFLAGS += -levent -lm
+overo_test_uart.srcs    += $(SRC_LASERHAWK)/overo_gcs_com.c
+#overo_test_uart.CFLAGS  += -DUBX -DUSE_GPS -DUSE_UART0 -DUART0_BAUD=B9600 -DGPS_CONFIGURE -DUSER_GPS_CONFIGURE=\"modules/gps_i2c/runtime_configure.h\" -DGPS_BAUD=B38400 -DGPS_LINK=Uart0 -DGPS_USE_LATLONG
+#overo_test_uart.CFLAGS  += -DUBX -DUSE_GPS -DUSE_UART0 -DUART0_BAUD=B9600 -DGPS_CONFIGURE -DGPS_BAUD=B38400 -DGPS_LINK=Uart0 -DGPS_USE_LATLONG
+overo_test_uart.CFLAGS  += -DUBX -DUSE_GPS -DUSE_UART0 -DUART0_BAUD=B38400 -DGPS_LINK=Uart0 -DGPS_USE_LATLONG
+overo_test_uart.srcs    += gps_ubx.c gps.c latlong.c $(SRC_LASERHAWK)/uart_hw.c
+overo_test_uart.CFLAGS  +=-DUSE_UART1 -DUART1_BAUD=B57600 -DDOWNLINK_DEVICE=Uart1 -DPPRZ_UART=Uart1 -DDATALINK=PPRZ 
+overo_test_uart.srcs    += pprz_transport.c $(SRC_LASERHAWK)/rcv_telemetry.c
+
+#include lisa, remove...
+include $(PAPARAZZI_SRC)/conf/autopilot/obsolete/lisa_test_progs.makefile
+
+  </makefile>
+
+</airframe>
