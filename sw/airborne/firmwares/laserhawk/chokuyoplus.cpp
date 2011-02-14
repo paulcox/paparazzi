@@ -240,7 +240,7 @@ void CHokuyoPlus::getRange()
 
 
             timespec  __tp;
-                int toto=clock_gettime (CLOCK_REALTIME,&__tp);
+            //    int toto=clock_gettime (CLOCK_REALTIME,&__tp);
             /*    struct timespec
                   {
                     __time_t tv_sec;		/* Seconds.  */

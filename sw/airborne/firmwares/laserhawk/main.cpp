@@ -52,7 +52,7 @@ sinon il n'ouvre pas les fichiers log au dela de 254
 #include "chokuyoplus.h"
 #include "chokuyoprocess.h"
 
-#define INCOPENCV
+//#define INCOPENCV
 //#define RECORDPPM
 
 #ifdef INCOPENCV
@@ -117,9 +117,11 @@ CHokuyoProcess *HokuyoProcess ;
 
 void TestAviRecord(void)
 {
+#ifdef INCOPENCV
     //test enregistrement video
     {
         printf("test enregistrement video\n");
+		
         cv::Mat *Img;
         cv::VideoWriter *Video;
 		unsigned char * im;
@@ -151,6 +153,7 @@ void TestAviRecord(void)
         free(im);
         exit(0);
     }
+	#endif
 }
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
@@ -258,22 +261,24 @@ int main(int argc, char *argv[])
                     //for a given value of tested t
                     HokuyoProcess-> EraseBitmap();
                     HokuyoProcess->DisplayLoca(-psi, ipole, HokuyoProcess->HokuyoSensor->data.depth[ipole], borneimin, borneimax);
-		    
+                    char chainescore[100];
+                    string text = chainescore;					
+#ifdef INCOPENCV
                     cv::Mat *Img;
                     Img = new cv::Mat(HEIGHT, WIDTH, CV_8UC3, (char *)HokuyoProcess->im_ray->data);
                     //  http://opencv.willowgarage.com/documentation/cpp/drawing_functions.html?highlight=text#getTextSize
-                    char chainescore[100];
+
 		    
                     sprintf(chainescore,"%03d: %16.2f",cap, scoret);
-                    string text = chainescore;
                     cv::putText(*Img, text,cv::Point(10,580),CV_FONT_HERSHEY_COMPLEX,1,0x00);
-                    
+#endif                    
 		    if (scoret<scoretbest) {
                         capbest = cap;
                         scoretbest = scoret;
                     }
                     sprintf(chainescore,"%03d: %16.2f",capbest, scoretbest);
                     text = chainescore;
+#ifdef INCOPENCV					
                     cv::putText(*Img, text, cv::Point(10,550), CV_FONT_HERSHEY_COMPLEX, 1, 0x00FF0000);
                     if (0) {
                         char namejpg[1000];
@@ -283,6 +288,7 @@ int main(int argc, char *argv[])
                     }
                     Video->operator <<(*Img);
                     delete(Img);
+#endif					
                 }
 
                 //encodage avi
@@ -359,7 +365,7 @@ int main(int argc, char *argv[])
         printf("OPENCV\n");
         delete Video;
         // delete Videotraj;
-#endif        
+        
         //    save_ppm("traj.ppm", HokuyoProcess->im_traj);
         cv::Mat *ImgT;
         ImgT = new cv::Mat(HokuyoProcess->im_traj->yd, HokuyoProcess->im_traj->xd, CV_8UC3, (char *)HokuyoProcess->im_traj->data);
@@ -368,6 +374,7 @@ int main(int argc, char *argv[])
         sprintf(chaine,"mencoder \"mf://../data/bitmap*.jpg\" -mf w=600:h=600:fps=15:type=jpg -ovc lavc  -o output.avi");
         //      system(chaine);
         //  mencoder "mf://../data/bitmap*.bmp" -mf w=600:h=600:fps=15:type=bmp -ovc lavc  -o output.avi
+#endif
         delete(HokuyoProcess);
         //   system("source ~/.bash_profile ;  display ../data/bitmap.ppm &");
         //system("display ../data/bitmap.ppm");
