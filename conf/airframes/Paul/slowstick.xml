@@ -10,6 +10,10 @@
     <target name="sim" board="pc" />
     <target name="ap" board="tiny_2.11"/>
 
+    <subsystem name="i2c">
+      <define name="USE_I2C0"/>
+    </subsystem>
+
     <subsystem  name="telemetry" type="transparent">
       <configure name="MODEM_BAUD" value="B9600" />
     </subsystem>
@@ -27,7 +31,7 @@
   </firmware>
 
   <modules>
-    <load name="infrared_adc.xml"/>
+    <load name="ins_arduimu.xml"/>
   </modules>
 
 <!-- commands section -->
