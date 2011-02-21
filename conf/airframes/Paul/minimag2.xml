@@ -6,7 +6,7 @@
     <define name="AGR_CLIMB" />
     <define name="LOITER_TRIM" />
     <define name="ALT_KALMAN" />
-	<define name="TELEMETRY_MODE_FBW" value="1"/>
+    <define name="TELEMETRY_MODE_FBW" value="1"/>
 
     <target name="sim" board="pc" />
     <target name="ap" board="tiny_2.11"/>
@@ -17,7 +17,7 @@
 
     <subsystem name="radio_control" type="ppm"/>
     <subsystem name="navigation" />
-<!--   <subsystem name="attitude" type="infrared"/>-->
+   <subsystem name="attitude" type="infrared"/>
     <subsystem name="control"/>
     <subsystem name="gps" type="ublox_lea5h"/>
   </firmware>
@@ -27,16 +27,16 @@
     <target name="setup_actuators" board="tiny_2.11" />
   </firmware>
 
-  <modules>
+ <!-- <modules>
     <load name="infrared_adc.xml"/>
-  </modules>
+  </modules>-->
 
   <servos>
-    <servo name="THROTTLE"   no="7" min="2000" neutral="2000" max="1000"/>
+    <servo name="THROTTLE"   no="7" min="1000" neutral="1000" max="2000"/>
     <servo name="AILERON_LEFT"  no="6" min="1875" neutral="1500" max="1050"/>
     <servo name="AILERON_RIGHT" no="4" min="1875" neutral="1475" max="1050"/>
     <servo name="RUDDER" no="3" min="1800" neutral="1450" max="1000"/>
-    <servo name="ELEVATOR" no="2" min="2500" neutral="1600" max="800"/>
+    <servo name="ELEVATOR" no="2" min="800" neutral="1600" max="2500"/>
   </servos>
 
   <commands>
@@ -87,12 +87,12 @@
     <!--<define name="HORIZ_SENSOR_TILTED" value="1"/>-->
 	<define name="HORIZ_SENSOR_ALIGNED" value="1"/>
 
-    <define name="LATERAL_CORRECTION" value="1"/>
+    <define name="LATERAL_CORRECTION" value="-1"/>
     <define name="LONGITUDINAL_CORRECTION" value="1"/>
     <define name="VERTICAL_CORRECTION" value="1"/>
 
     <define name="ROLL_NEUTRAL_DEFAULT" value="-6" unit="deg"/>
-    <define name="PITCH_NEUTRAL_DEFAULT" value="12" unit="deg"/>
+    <define name="PITCH_NEUTRAL_DEFAULT" value="10" unit="deg"/>
 
     <define name="CORRECTION_UP" value="1."/>
     <define name="CORRECTION_DOWN" value="1."/>
@@ -102,7 +102,6 @@
 
   <section name="BAT">
     <define name="MILLIAMP_AT_FULL_THROTTLE" value="10000"/>
-
     <define name="CATASTROPHIC_BAT_LEVEL" value="9.3" unit="V"/>
   </section>
  
@@ -116,7 +115,7 @@
     <define name="ALT_KALMAN_ENABLED" value="TRUE"/>
 
     <define name="TRIGGER_DELAY" value="1."/>
-    <define name="DEFAULT_CIRCLE_RADIUS" value="50."/>
+    <define name="DEFAULT_CIRCLE_RADIUS" value="35."/>
   </section>
  
   <section name="VERTICAL CONTROL" prefix="V_CTL_">
@@ -147,7 +146,7 @@
   </section>
 
   <section name="HORIZONTAL CONTROL" prefix="H_CTL_">
-    <define name="COURSE_PGAIN" value="-1.2"/>
+    <define name="COURSE_PGAIN" value="-0.7"/>
     <define name="ROLL_MAX_SETPOINT" value="0.6" unit="radians"/>
     <define name="PITCH_MAX_SETPOINT" value="0.5" unit="radians"/>
     <define name="PITCH_MIN_SETPOINT" value="-0.5" unit="radians"/>
