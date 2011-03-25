@@ -78,7 +78,7 @@ using namespace std;
 //#define LOG_NAME	"/home/paul/Documents/LAAS/from_bertrand/qtcreator_projs/hokuyomti/log/2010-06-14-22-58-56"
 //#define LOG_NAME	"/home/paul/Documents/LAAS/from_bertrand/qtcreator_projs/hokuyomti/log/2010-06-14-23-02-25"
 
-#define LOG_NAME	"/home/paul/Documents/LAAS/from_bertrand/qtcreator_projs/hokuyomti/log/2011-06-14-22-54-34"
+#define LOG_NAME	"/home/root/log/2011-06-14-22-54-34"
 
 
 #define HOKUYO_DEV	(char*)"/dev/ttyACM0"
@@ -93,7 +93,7 @@ CHokuyoProcess *HokuyoProcess ;
     char commandline[1000];
     char dateline[1000];
     static  char BasenameLog[1000];
-       char BasenameInit[1000]       ="/home/paul/Documents/LAAS/from_bertrand/qtcreator_projs/hokuyomti/log/";
+       char BasenameInit[1000]       ="/home/root/log/";
 
     time_t t;
     time(&t);
