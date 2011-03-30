@@ -82,6 +82,8 @@
   </section>
 
   <makefile>
+#needed this after ubuntu maverick reinstall to compile omap targets 
+#sudo apt-get install libmpfr1ldbl
 
 #
 # main_lh
@@ -126,9 +128,12 @@ main_lh.CFLAGS += -DOVERO_LINK_MSG_UP=AutopilotMessageBethUp -DOVERO_LINK_MSG_DO
 LASERHAWK_DIR = /opt/paparazzi/omap/overo-oe/tmp/sysroots/armv7a-angstrom-linux-gnueabi/usr/include/eigen2
 LASERHAWK_CFLAGS =  -I$(LASERHAWK_DIR) -DEIGEN_DONT_VECTORIZE  -DEIGEN_DONT_ALIGN -DNDEBUG 
 
-main_lh.LDFLAGS += -lflexiport -lhokuyo_aist -L/home/paul/Documents/LAAS/overo/hokuyo/gbx-flexiport-9.11-r1/gearbox-9.11/src/flexiport/ -L/home/paul/Documents/LAAS/overo/hokuyo/gbx-hokuyo-aist-9.11-r0/gearbox-9.11/src/hokuyo_aist
+#main_lh.LDFLAGS += -lflexiport -lhokuyo_aist -L/home/paul/Documents/LAAS/overo/hokuyo/gbx-flexiport-9.11-r1/gearbox-9.11/src/flexiport/ -L/home/paul/Documents/LAAS/overo/hokuyo/gbx-hokuyo-aist-9.11-r0/gearbox-9.11/src/hokuyo_aist
+#main_lh.LDFLAGS += -lflexiport -lhokuyo_aist -L/home/paul/Documents/LAAS/laserhawk/ipks
+main_lh.LDFLAGS += -lflexiport -lhokuyo_aist
 #main_lh.CXXFLAGS += $(LASERHAWK_CFLAGS)
-main_lh.CXXFLAGS += -I/home/paul/Documents/LAAS/overo/hokuyo/gbx-flexiport-9.11-r1/gearbox-9.11/src/
+#main_lh.CXXFLAGS += -I/home/paul/Documents/LAAS/overo/hokuyo/gbx-flexiport-9.11-r1/gearbox-9.11/src/
+main_lh.CXXFLAGS += -I/home/paul/Documents/LAAS/openrobots/include/gearbox
 main_lh.cpp_srcs    = $(SRC_LASERHAWK)/main.cpp
 main_lh.cpp_srcs    += $(SRC_LASERHAWK)/chokuyoprocess.cpp
 main_lh.cpp_srcs    += $(SRC_LASERHAWK)/chokuyoplus.cpp
