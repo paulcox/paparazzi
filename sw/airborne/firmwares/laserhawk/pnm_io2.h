@@ -1,4 +1,4 @@
-/**
+ /**
  * \file pnm_io2.cpp
  * \brief creation of images
  * \author Bertrand Vandeportaele

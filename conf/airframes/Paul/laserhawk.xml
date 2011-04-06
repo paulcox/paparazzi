@@ -105,7 +105,6 @@ SRC_LASERHAWK=firmwares/laserhawk
 #./gbx-hokuyo-aist-9.11-r0/gearbox-9.11/src/hokuyo_aist/hokuyo_aist.h
 #/home/paul/Documents/LAAS/overo/hokuyo
 
-
 main_lh.ARCHDIR = omap
 main_lh.CFLAGS = -I. -I$(SRC_FMS) 
 #main_lh.srcs  = $(SRC_LASERHAWK)/main_overo.c
@@ -138,6 +137,21 @@ main_lh.cpp_srcs    = $(SRC_LASERHAWK)/main.cpp
 main_lh.cpp_srcs    += $(SRC_LASERHAWK)/chokuyoprocess.cpp
 main_lh.cpp_srcs    += $(SRC_LASERHAWK)/chokuyoplus.cpp
 main_lh.cpp_srcs    += $(SRC_LASERHAWK)/pnm_io2.cpp
+
+#
+# getrange
+#
+
+getrange.ARCHDIR = omap
+getrange.CFLAGS = -I. -I$(SRC_FMS) 
+getrange.CFLAGS += -DFMS_PERIODIC_FREQ=512
+getrange.CFLAGS += -DOVERO_LINK_MSG_UP=AutopilotMessageBethUp -DOVERO_LINK_MSG_DOWN=AutopilotMessageBethDown
+
+getrange.LDFLAGS = -lflexiport -lhokuyo_aist -lrt
+getrange.CXXFLAGS = -I/home/paul/Documents/LAAS/openrobots/include/gearbox
+getrange.cpp_srcs    = $(SRC_LASERHAWK)/main.cpp
+getrange.cpp_srcs    += $(SRC_LASERHAWK)/chokuyoplus.cpp
+getrange.cpp_srcs    += $(SRC_LASERHAWK)/pnm_io2.cpp
 
 #
 # overo uart test

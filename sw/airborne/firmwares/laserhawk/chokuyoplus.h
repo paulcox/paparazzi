@@ -30,12 +30,12 @@
 
 using namespace std;
 
-    typedef struct {
-        uint32_t* depth;
-        FLOATHOKUYO * x_data;
-        FLOATHOKUYO * y_data;
-        FLOATHOKUYO * angle;
-    } data_sensor;
+typedef struct {
+    uint32_t* depth;
+    FLOATHOKUYO * x_data;
+    FLOATHOKUYO * y_data;
+    FLOATHOKUYO * angle;
+} data_sensor;
 
 
 
@@ -48,44 +48,37 @@ public:
     void close_port();
     void getRange();
     void setReplayFileName(string fileNameInit);
-void setRealSensor();
-void setVirtualSensor();
-void startSaveReplay(
-);
-void stopSaveReplay();
-
-
-
-
-
+    void setRealSensor();
+    void setVirtualSensor();
+    void startSaveReplay();
+    void stopSaveReplay();
+    void seekReplay(int new_nb_scan);
 
     // Hokuyo variables
     hokuyo_aist::HokuyoLaser laser; // Laser scanner object
 
-
+    double hokuyotime;  //time read & written from/to the log file
     char  deviceName[1000];
-
-     data_sensor data;
-
+    data_sensor data;
     int nb_point;
-
     int limite;
     FLOATHOKUYO rayon_cercle;
-
     FLOATHOKUYO startAngle, endAngle;
-
     FLOATHOKUYO  *Rx_point , *Ry_point , *Rz_point;
     FLOATHOKUYO  Rx_xsens , Ry_xsens , Rz_xsens;
     FLOATHOKUYO x_test, y_test;
 
-    int firstStep, lastStep, nb_scan, nb_sphere, nb_testscan;
+    int firstStep, lastStep;
+    int nb_scan; //counter of scans
+    int nb_sphere;
+    //, nb_testscan;  //removed
     unsigned int baud, speed, clusterCount;
     bool getIntensities, getNew, verbose;
 
     // Hokuyo flag
     bool port_open;
 
-    protected:
+protected:
     string fileName;
     bool saveReplay;
 
