@@ -153,7 +153,7 @@ void CHokuyoPlus::getRange()
 	    
             hokuyotime = __tp.tv_sec + __tp.tv_nsec*1e-9;
 
-	    printf("%lf", hokuyotime);
+	    printf("START%lf\n", hokuyotime);
 
     nb_scan++;
 }

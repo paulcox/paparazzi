@@ -37,13 +37,21 @@ int main(int argc, char *argv[]) {
 	while(1) {   
 		HokuyoSensor->getRange();
 		int goodcnt = 0;
+		int maxdist = 0;
 		for (int i = 0 ; i <= HokuyoSensor->lastStep-HokuyoSensor->firstStep; i++) {
 			if (HokuyoSensor->data.depth[i] > 100) {
-				if (doprint) printf("%d: %d ",i,HokuyoSensor->data.depth[i]);
-				goodcnt++;
+				if (doprint) {
+					//printf("%d: %d ",i,HokuyoSensor->data.depth[i]);
+					printf("%d\n",HokuyoSensor->data.depth[i]);
+				/*Packet : Header,Length,payload,checksum
+				  Skip dists < threshold and restart packet
+				  Packets limited to PACBYTES bytes, restart packet if length attained*/
+				}
+				//if (HokuyoSensor->data.depth[i] > maxdist) maxdist = HokuyoSensor->data.depth[i];
+				//goodcnt++;
 			}
 		}
-		printf(" pts: %d\n", goodcnt);
+		//printf(" pts: %d max: %d\n", goodcnt, maxdist);
 	}
 
 }
