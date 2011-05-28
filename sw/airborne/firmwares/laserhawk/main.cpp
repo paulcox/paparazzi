@@ -6,8 +6,6 @@
 
 CHokuyoPlus *HokuyoSensor;
 
-
-
 int main(int argc, char *argv[]) {	
 	int doprint = 0;
 	
@@ -39,7 +37,7 @@ int main(int argc, char *argv[]) {
 		int goodcnt = 0;
 		int maxdist = 0;
 		for (int i = 0 ; i <= HokuyoSensor->lastStep-HokuyoSensor->firstStep; i++) {
-			if (HokuyoSensor->data.depth[i] > 100) {
+//			if (HokuyoSensor->data.depth[i] > 100) {
 				if (doprint) {
 					//printf("%d: %d ",i,HokuyoSensor->data.depth[i]);
 					printf("%d\n",HokuyoSensor->data.depth[i]);
@@ -49,7 +47,7 @@ int main(int argc, char *argv[]) {
 				}
 				//if (HokuyoSensor->data.depth[i] > maxdist) maxdist = HokuyoSensor->data.depth[i];
 				//goodcnt++;
-			}
+//			}
 		}
 		//printf(" pts: %d max: %d\n", goodcnt, maxdist);
 	}
